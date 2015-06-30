@@ -11,10 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150629213345) do
+ActiveRecord::Schema.define(version: 20150630140223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "follows", force: :cascade do |t|
+    t.integer  "followable_id",                   null: false
+    t.string   "followable_type",                 null: false
+    t.integer  "follower_id",                     null: false
+    t.string   "follower_type",                   null: false
+    t.boolean  "blocked",         default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "follows", ["followable_id", "followable_type"], name: "fk_followables", using: :btree
+  add_index "follows", ["follower_id", "follower_type"], name: "fk_follows", using: :btree
 
   create_table "tweeks", force: :cascade do |t|
     t.string   "content"
