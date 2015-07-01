@@ -1,23 +1,46 @@
-<h1>Welcome To Tweeker<br/><small>Get the latest tweeks at your fingertips</small></h1>
+<main>
+  <article>
+    <h3>Welcome back <%= @current_user.username %>!</h3>
+    <h1>Timeline</h1>
+    <br/>
+    <%= simple_form_for @tweek do |f| %>
+      <%= f.input :content, as: :text, label: false, placeholder: "Start tweeking here..." %>
+      <%= f.submit class: "btn btn-primary" %>
+      <% end %>
+  <% @tweeks.each do |tweek| %>
+    <div class = "tweek">
+      <%= tweek.content %>
+      <p class="meta">
+        <em><%= tweek.user.username %>
+          <%= distance_of_time_in_words_to_now(tweek.created_at)%> ago
+        </em>
+      </p>
+    </div>
+    <% end %>
+    <%= paginate @tweeks %>
 
-<p>Hey <%= @current_user.username %></p>
-<br/>
-<h4>People You Follow</h4>
+      </article>
+    <br/>
+    <aside>
+<h2>People You Follow</h2>
     <ul>
       <% @current_user.following_users.each do |user| %>
-        <li><%= user.username %></li>
+        <li><%= user.username %>
+            <%= link_to "Unfollow", unfollow_path(id: user.id), method: :delete %>
+        </li>
       <% end %>
     </ul>
-  <h4>Other People You Might Find Interesting</h4>
+  <h3>Other People You Might Find Interesting</h3>
     <ul>
       <% @users.each do |user| %>
         <li><%= user.username %>
             <% if @current_user.following? user %>
                 Follows!
-                <%= link_to "Unfollow", unfollow_path(:id user.id), method: :delete %>
             <% else %>
               <%= link_to "Follow this user", follow_path(id: user.id), method: :post %>
           <% end %>
         </li>
       <% end %>
     </ul>
+  </aside>
+  </main>

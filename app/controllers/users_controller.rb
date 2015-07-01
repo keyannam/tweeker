@@ -1,8 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action do
-    authenticate_user
-  end
+  before_action :authenticate_user, only: [:follow, :delete]
 
   def new
     @user = User.new
@@ -19,12 +17,12 @@ class UsersController < ApplicationController
   def follow
     user = User.find params[:id]
       @current_user.follow user
-        redirect_to root_path
+        redirect_to root_path, notice: "You just followed #{user.username}"
   end
 
   def delete
     user = User.find params[:id]
     @current_user.stop_following user
-    redirect_to root_path
+    redirect_to root_path, notice: "You just unfollowed #{user.username}"
   end
 end

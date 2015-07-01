@@ -2,12 +2,15 @@ Rails.application.routes.draw do
   get 'sign_up' => 'users#new', as: :new_user
   post 'sign_up' => 'users#create', as: :users
 
+  # get 'tweeks' => 'tweeks#new', as: :tweek 
+  post 'tweeks' => 'tweeks#create', as: :tweeks
+
   get 'sign_in' => 'session#new', as: :sign_in
   post 'auth' => 'session#create', as: :auth
   delete 'sign_out' => 'session#delete', as: :sign_out
 
   post "/follow/:id" => 'users#follow', as: :follow
-  delete "/follow/:id" => 'users#delete', as: :unfollow 
+  delete "/follow/:id" => 'users#delete', as: :unfollow
 
   root 'pages#dashboard'
 
