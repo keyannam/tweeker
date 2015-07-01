@@ -8,7 +8,7 @@ class TweeksController < ApplicationController
     @tweek = Tweek.new params.require(:tweek).permit(:content)
     @tweek.user = @current_user
       if @tweek.save
-        redirect_to root_path, notice: "You just tweeked!"
+        redirect_to dashboard_path, notice: "You just tweeked!"
       else
         render :dashboard
       end
