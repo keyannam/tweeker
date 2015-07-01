@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   post 'auth' => 'session#create', as: :auth
   delete 'sign_out' => 'session#delete', as: :sign_out
 
+  get 'dashboard' => 'pages#dashboard', as: :dashboard 
+
   post "/follow/:id" => 'users#follow', as: :follow
   delete "/follow/:id" => 'users#delete', as: :unfollow
 

@@ -1,7 +1,5 @@
 class PagesController < ApplicationController
-
   before_action :authenticate_user, only: [:dashboard]
-
 
   def index
   end
@@ -15,6 +13,5 @@ class PagesController < ApplicationController
     @users = User.all
                  .reject {|u| @current_user.following? u}
                  .reject {|u| @current_user == u}
-
-  end
+    end
 end
